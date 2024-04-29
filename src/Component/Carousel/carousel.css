@@ -1,0 +1,17 @@
+.slide img{
+  height: 350px !important;
+}
+.carousel .thumbs-wrapper{
+  margin: 0px !important;
+}
+.carousel .thumb img {
+  height: 100px !important;
+}
+.carousel .thumb.selected, .carousel .thumb:hover {
+  border: 3px solid #0171a3 !important;
+}
+@media (min-width: 960px){
+.carousel .control-dots {
+    bottom: 38px !important;
+}
+}
