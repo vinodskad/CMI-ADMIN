@@ -28,7 +28,6 @@ const ApprovalCard = ({ data, meta, actions }) => {
   });
 
   useEffect(() => {
-    console.log(data, meta, "data meta");
     if (data) {
       setCardDef({
         variant: meta?.variant,

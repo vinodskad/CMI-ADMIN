@@ -26,55 +26,60 @@ const ProductDetails = () => {
   const productDetails = useSelector(ProductData)?.getDataById;
   const { id } = useParams();
   const lastIdNumber = id.match(/\d+$/)[0];
-  const [images, setImages]=useState();
+  const [images, setImages] = useState();
 
-  useEffect(()=>{
-    if(lastIdNumber){
-    dispatch(GetProductByIdData(lastIdNumber))
+  useEffect(() => {
+    if (lastIdNumber) {
+      dispatch(GetProductByIdData(lastIdNumber))
     }
-  },[]);
+  }, []);
   useEffect(() => {
     if (productDetails) {
       setImages(productDetails?.attachment);
     }
   }, [productDetails]);
+
   return (
-    <Card className={`product-card ${classes.root}`}>
-        
-    <CardContent>
-    <Grid container spacing={3}>
-              <Grid item sm={4}>
-                <Card style={{ padding: "5px" }}>
-                  <Carousel data={images} />
-                </Card>
-              </Grid>
-        
-        <Grid item sm={8}>
-        <Card style={{ padding: "20px" }}>
-      <Typography variant="h5" component="h2" className="product-name" gutterBottom>
-        Product Name : {productDetails?.name}
-      </Typography>
-      <Typography variant="body2" className="product-description" color="textSecondary">
-        <b>Description : </b>{productDetails?.description}
-      </Typography>
-      <Typography className="product-item" gutterBottom sx={{mt:2}}>
-      <b>Color : </b>{productDetails?.color}
-      </Typography>
-      <Typography className="product-item" gutterBottom>
-      <b>Material : </b>{productDetails?.material}
-      </Typography>
-      <Typography className="product-item" gutterBottom>
-      <b> Size : </b>{productDetails?.material}
-      </Typography>
-      <Typography className="product-item" gutterBottom>
-      <b>Minimum Order : </b>{productDetails?.minOrder}{productDetails?.minOrderUnit}
-      </Typography>
-      
+    <>
+      <Typography className="pageHeader">Product Details</Typography>
+      <Card className={`product-card ${classes.root}`}>
+
+        <CardContent>
+          <Grid container spacing={3}>
+            <Grid item sm={4}>
+              <Card style={{ padding: "5px" }}>
+                <Carousel data={images} />
+              </Card>
+            </Grid>
+
+            <Grid item sm={8}>
+              <Card style={{ padding: "20px", minHeight: "500px" }}>
+                <Typography variant="h5" component="h2" className="product-name" gutterBottom>
+                  {/* Product Name : */}
+                  {productDetails?.name}
+                </Typography>
+                <Typography variant="body2" className="product-description" color="textSecondary">
+                  <b>Description : </b>{productDetails?.description}
+                </Typography>
+                <Typography className="product-item" gutterBottom sx={{ mt: 2 }}>
+                  <b>Color : </b>{productDetails?.color}
+                </Typography>
+                <Typography className="product-item" gutterBottom>
+                  <b>Material : </b>{productDetails?.material}
+                </Typography>
+                <Typography className="product-item" gutterBottom>
+                  <b> Size : </b>{productDetails?.material}
+                </Typography>
+                <Typography className="product-item" gutterBottom>
+                  <b>Minimum Order : </b>{productDetails?.minOrder} {productDetails?.minOrderUnit}
+                </Typography>
+
+              </Card>
+            </Grid>
+          </Grid>
+        </CardContent>
       </Card>
-     </Grid>
-     </Grid>
-    </CardContent>
-  </Card>
+    </>
   );
 };
 

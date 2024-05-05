@@ -6,6 +6,8 @@ import Login from "../Modules/Auth/Login";
 import ProductList from "../Modules/Product/ProductList";
 import OrderListPage from "../Modules/Order/OrderList";
 import ProductDetails from "../Modules/Product/ProductDetails";
+import AddProduct from "../Modules/Product/AddProduct";
+import OrderDetails from "../Modules/Order/OrderDetails";
 
 const RoutingPath = () => {
   return (
@@ -15,8 +17,10 @@ const RoutingPath = () => {
       </Route>
       <Route path="/cmi" element={<AdminLayout />}>
         <Route index element={<ProductList />}></Route>
-        <Route  path="/cmi/order" element={<OrderListPage />}></Route>
-        <Route  path="/cmi/productDetails/:id" element={<ProductDetails/>}/>
+        <Route path="/cmi/addProduct" element={<AddProduct />} />
+        <Route path="/cmi/productDetails/:id" element={<ProductDetails />} />
+        <Route path="/cmi/order" element={<OrderListPage />}></Route>
+        <Route path="/cmi/orderDetails/:id" element={<OrderDetails />}></Route>
       </Route>
     </Routes>
   );

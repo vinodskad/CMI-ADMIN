@@ -4,7 +4,6 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "./carousel.css";
 export default function imageSlider(data) {
- console.log(data, "9999999999999999999999")
   return (
     <Carousel autoPlay  className="imageSlider">
       {data?.data?.map((item) => {

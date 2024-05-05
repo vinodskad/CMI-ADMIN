@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect } from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
@@ -72,11 +72,19 @@ export default function MiniDrawer() {
   //const userDetailsJson = localStorage.getItem("userDetail");
  // const userDetails = JSON.parse(userDetailsJson);
 
-
-
+ var basePath =
+ "/" + window.location.pathname.split("/", 3).filter(Boolean).join("/");
+//console.log(basePath,"activeMenue");
+useEffect(()=>{
+  console.log(basePath,"basePath", basePath==="/cmi/orderDetails")
+if(basePath==="/cmi/orderDetails"){
+  setActiveMenu("/cmi/order")
+}
+},[basePath])
  const handleMenu=(active)=>{
     setActiveMenu(active)
  }
+
   return (
     <Box sx={{ display: "flex", marginTop: "50px" }}>
       <CssBaseline />
@@ -102,7 +110,7 @@ export default function MiniDrawer() {
                   component="a"
                   sx={{ display: "block" }}
                   to="/cmi/order"
-                  className={activeMenue === "/cmi/order" ? "activeMenue" : ""}
+                  className={activeMenue === "/cmi/order" || activeMenue === "/cmi/orderDetails" ? "activeMenue" : ""}
                   onClick={()=>handleMenu("/cmi/order")}
                 >
                   <ListItemButton>

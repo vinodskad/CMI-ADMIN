@@ -1,12 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import ToastAlert from "../../Component/Alert/ToastAlert";
-import { AddProduct, GetProduct, GetProductById } from "./ProductService";
+import { AddProduct, GetProduct, GetProductById, GetCategory, GetUnit,GetFilter } from "./ProductService";
 // import swal from "sweetalert";
 
 const initialState = {
   addData: undefined,
   getData: undefined,
   getDataById:undefined,
+  getCategory:undefined,
+  getUnit:undefined,
+  getFilter:undefined,
   error: undefined,
   status: "idle"
 };
@@ -21,8 +24,10 @@ export const AddProductData = createAsyncThunk(
 
 export const GetProductData = createAsyncThunk(
   "Product/GetProduct",
-  async () => {
-    const response = await GetProduct();
+  
+  async (data) => {
+    //console.log(data,"slice");
+    const response = await GetProduct(data);
     return response;
   }
 );
@@ -33,7 +38,27 @@ export const GetProductByIdData = createAsyncThunk(
     return response;
   }
 );
-
+export const GetCategoryData = createAsyncThunk(
+  "Product/GetCategory",
+  async () => {
+    const response = await GetCategory();
+    return response;
+  }
+);
+export const GetUnitData = createAsyncThunk(
+  "Product/GetUnit",
+  async () => {
+    const response = await GetUnit();
+    return response;
+  }
+);
+export const GetFilterData = createAsyncThunk(
+  "Product/GetFilter",
+  async () => {
+    const response = await GetFilter();
+    return response;
+  }
+);
 export const ProductSlice = createSlice({
   name: "Product",
   initialState,
@@ -76,6 +101,44 @@ export const ProductSlice = createSlice({
       .addCase(GetProductByIdData.fulfilled, (state, action) => {
         state.status = "success";
         state.getDataById = action.payload;
+      })
+
+
+      .addCase(GetCategoryData.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(GetCategoryData.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action;
+      })
+      .addCase(GetCategoryData.fulfilled, (state, action) => {
+        state.status = "success";
+        state.getCategory = action.payload;
+      })
+
+
+      .addCase(GetUnitData.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(GetUnitData.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action;
+      })
+      .addCase(GetUnitData.fulfilled, (state, action) => {
+        state.status = "success";
+        state.getUnit = action.payload;
+      })
+
+      .addCase(GetFilterData.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(GetFilterData.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action;
+      })
+      .addCase(GetFilterData.fulfilled, (state, action) => {
+        state.status = "success";
+        state.getFilter = action.payload;
       });
   }
 });

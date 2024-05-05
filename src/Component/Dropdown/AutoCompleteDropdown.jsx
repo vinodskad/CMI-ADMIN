@@ -16,18 +16,16 @@ const AutoCompleteDropdown = ({
   getOptionValue,
   disabled,
   showAdd,
-  defaultValue
+  defaultValue,
+  width
 }) => {
 
   const check = (val) => {
-    // console.log("Inside useEffect of dropdown =====>, getOptionValue == ", getOptionValue, " selectedValue == ", val, " dataSet == ", dataSet);
-    if(getOptionValue && dataSet){
-      const val1 = dataSet?.filter((val2)=> val2[getOptionValue] == val);
-      // console.log("filtered data =====>", val1,...val1, typeof(val1[0]));
-      return(val1[0] ? val1[0] : null)
-    }else{
-      // console.log("===== Inside else part =======");
-      return(val ? val : null);
+    if (getOptionValue && dataSet) {
+      const val1 = dataSet?.filter((val2) => val2[getOptionValue] == val);
+      return (val1[0] ? val1[0] : null)
+    } else {
+      return (val ? val : null);
     }
   };
 
@@ -47,8 +45,8 @@ const AutoCompleteDropdown = ({
           name={name}
           value={check(selectedValue)}
           onChange={handleChange}
-         
-          id={isRequired?"outlined-required":"outlined-basic"}
+          sx={{ width: width ? width : "" }}
+          id={isRequired ? "outlined-required" : "outlined-basic"}
           variant="outlined"
           size="small"
           tabIndex={0}
@@ -62,13 +60,13 @@ const AutoCompleteDropdown = ({
           // sx={{ width: "100%" }}
           renderInput={(params) => (
             <>
-                        <TextField {...params} required={isRequired}  label={label}/>
-                        {showAdd&&<label>Add New</label>}
+              <TextField {...params} required={isRequired} label={label} />
+              {showAdd && <label>Add New</label>}
             </>
           )}
           fullWidth
           disabled={disabled}
-          
+
         />
       </div>
     </>

@@ -43,9 +43,8 @@ export const StepStyleDTO = {
 };
 
 export const arrayToObject = (item) => {
-  console.log(item, "itemitem");
   item?.map((feilds) => {
-   return console.log(feilds, "arrayfeilds");
+   return feilds;
   });
 };
 

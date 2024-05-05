@@ -1,24 +1,26 @@
-import {
-  Add,
-  Edit,
-  Margin,
-  Padding,
-  RemoveRedEye,
-} from "@mui/icons-material";
+import {  Add,  Edit,  RemoveRedEye } from "@mui/icons-material";
 import {
   Button,
   Card,
   Grid,
+  IconButton,
+  Paper,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
+  Tooltip,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import InputTextField from "../InputTextField/InputTextField";
 import { Pagination } from "./Pagination";
 import { replace } from "../../app/HelperFunction";
+import InputBase from '@mui/material/InputBase';
+import Divider from '@mui/material/Divider';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import SearchIcon from '@mui/icons-material/Search';
+import RefreshIcon from '@mui/icons-material/Refresh';
+import ProductFilter from "../../Modules/Product/ProductFilter";
 
 const TableList = ({
   data,
@@ -36,15 +38,24 @@ const TableList = ({
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [search, setSearch] = useState("");
 
-  const [filteredData, setFilteredData] = useState(data);
-  console.log(totalItems,"totalItems")
+  const [filteredData, setFilteredData] = useState();
+  const [open, setOpen] = React.useState(false);
+  const [filter, setFilter] = useState({})
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  //console.log(totalItems,"totalItems")
 
   useEffect(() => {
     setApiParam({
       pageNo: page + 1,
       pageSize: rowsPerPage,
+      searchOn: "name",
+      searchValue: "",
+      filter: filter
+
     });
-  }, [page, rowsPerPage]);
+  }, [page, rowsPerPage, filter]);
 
   useEffect(() => {
     setFilteredData(data);
@@ -59,13 +70,21 @@ const TableList = ({
     setPage(0);
   };
 
-  const handleSearch = (value) => {
-    setSearch(value);
-    const filtered = data.filter((item) =>
-      item.productName.toLowerCase().includes(value.toLowerCase())
-    );
-    setFilteredData(filtered);
+  const handleSearch = () => {
+    setApiParam({
+      pageNo: page + 1,
+      pageSize: rowsPerPage,
+      searchOn: "name",
+      searchValue: search,
+      filter: filter
+    });
   };
+
+  const handleRefresh = () => {
+    window.location.reload();
+  }
+
+
 
   return (
     <Card>
@@ -84,11 +103,32 @@ const TableList = ({
         </Grid>
         <Grid item sm={4}></Grid>
         <Grid item sm={4}>
-          <InputTextField
-            label="Search"
-            value={search}
-            onChange={handleSearch}
-          />
+          <Paper
+            component="form"
+            sx={{ p: '2px 4px', display: 'flex', alignItems: 'center' }}
+          >
+
+            <InputBase
+              sx={{ ml: 1, flex: 1 }}
+              placeholder="Type and click Search icon"
+              inputProps={{ 'aria-label': 'Search' }}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <IconButton type="button" sx={{ p: '10px' }} aria-label="search" onClick={handleSearch}>
+              <SearchIcon />
+            </IconButton>
+            <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+            <Tooltip title="Filter">
+              <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions" onClick={handleOpen}>
+                <FilterAltIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Refresh Search and Filter">
+              <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions" onClick={handleRefresh}>
+                <RefreshIcon />
+              </IconButton>
+            </Tooltip>
+          </Paper>
         </Grid>
       </Grid>
       <Table
@@ -152,7 +192,7 @@ const TableList = ({
                     )
                   ) : (
                     <TableCell>
-                      <img src={row[col?.key]} style={{ height: "50px", marginLeft:"-15px"}} />
+                      <img src={row[col?.key]} style={{ height: "50px", marginLeft: "-15px" }} />
                     </TableCell>
                   )}
                 </TableCell>
@@ -174,6 +214,7 @@ const TableList = ({
           No Records Available
         </div>
       )}
+      <ProductFilter open={open} handleClose={handleClose} setFilter={setFilter} />
     </Card>
   );
 };

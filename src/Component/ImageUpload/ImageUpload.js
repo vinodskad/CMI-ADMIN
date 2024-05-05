@@ -2,7 +2,7 @@ import { Close, Delete, InsertPhoto, PhotoCamera } from "@mui/icons-material";
 import { Button, Card, Grid, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
 
-const ImageUpload = ({ attachments,setImage }) => {
+const ImageUpload = ({ attachments,setImage ,image, thumbnail}) => {
   const [file, setFile] = useState([]);
   const [fileArr, setFileArr] = useState([]);
 
@@ -10,9 +10,7 @@ const ImageUpload = ({ attachments,setImage }) => {
     let ImagesArray = Object.entries(e.target.files).map((e) =>
       URL.createObjectURL(e[1])
     );
-    console.log(e.target.files);
     setFile([...file, ...ImagesArray]);
-    //console.log("file", file);
     let filesArray = Object.entries(e.target.files).map((e) =>
       e
     );
@@ -23,8 +21,12 @@ const ImageUpload = ({ attachments,setImage }) => {
   useEffect(() => {
     setImage(fileArr)
   }, [fileArr]);
+  useEffect(()=>{
+    if(image?.length===0 && thumbnail?.length===0){
+      setFile([]);
+    }
+  },[image, thumbnail])
   useEffect(()=>{    
-    console.log(attachments,"images")
     if(attachments!==undefined){
       var attachArr=attachments?.map((item)=>{
         return item?.url
@@ -79,7 +81,7 @@ const ImageUpload = ({ attachments,setImage }) => {
           multiple
         /> */}
           <Button variant="contained" component="label" className="background-button">
-            Upload <InsertPhoto sx={{ ml: 2 }} />
+            Add <InsertPhoto sx={{ ml: 2 }} />
             <input hidden accept="image/*" multiple type="file" onChange={handleUpload} />
           </Button>
         </Grid>

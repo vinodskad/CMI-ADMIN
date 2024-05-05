@@ -18,13 +18,10 @@ const Dropdown = ({
 }) => {
   const handleChange = (e) => onChange(e.target.value);
   const check = (val) => {
-    // console.log("Inside useEffect of dropdown =====>, getgetOptionValue == ", getgetOptionValue, " selectedValue == ", val, " dataSet == ", dataSet);
     if(getOptionValue && dataSet){
       const val1 = dataSet?.filter((val2)=> val2[getOptionValue] == val);
-      // console.log("filtered data =====>", val1,...val1, typeof(val1[0]));
       return(val1[0] ? val1[0] : null)
     }else{
-      // console.log("===== Inside else part =======");
       return(val ? val : null);
     }
   };

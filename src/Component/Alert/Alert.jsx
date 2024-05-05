@@ -19,7 +19,6 @@ export default function AlertBox({openAlert,alertType,alertMsg}) {
   };
   useEffect(()=>{
     setOpen(openAlert)
-    console.log(openAlert)
   },[openAlert])
 
   return (

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {  TextField,  Button } from "@mui/material";
+import { TextField, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import "./Auth.css";
 import { useSelector, useDispatch } from "react-redux";
@@ -74,7 +74,7 @@ const Login = ({ user }) => {
     <div style={{ width: "300px" }}>
       <div className="textAlignCenter">
         <h1 style={{ marginTop: "0px" }}>Sign In</h1>
-      </div>      
+      </div>
       <div className="inputpadding">
         <TextField
           type="text"
@@ -124,10 +124,10 @@ const Login = ({ user }) => {
           // disabled={!isValid}
           color="primary"
           onClick={handleSignIn}
-          sx={{ mt: 3, mx: "auto",  width: "100%" }}
+          sx={{ mt: 3, mx: "auto", width: "100%" }}
         >
           Sign In
-        </Button>        
+        </Button>
       </div>
     </div>
   );

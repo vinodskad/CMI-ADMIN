@@ -9,7 +9,7 @@ import {
   ProductData,
   GetProductData,
 } from "./ProductSlice";
-import {ProductListConfig} from './ProductListConfig'
+import { ProductListConfig } from './ProductListConfig'
 
 
 const ProductList = () => {
@@ -18,6 +18,10 @@ const ProductList = () => {
   const [apiParam, setApiParam] = useState({
     pageNo: 1,
     pageSize: 10,
+    searchOn: "name",
+    searchValue: "",
+    filter: {
+    }
   });
   const [formFeild, setFormFeild] = useState();
   const [open, setOpen] = React.useState(false);
@@ -25,16 +29,14 @@ const ProductList = () => {
   const [recordId, setRecordId] = useState("");
   const [modalHeader, setModalHeader] = useState("");
   useEffect(() => {
-    // if (apiParam) {
+    if (apiParam) {
+      //console.log(apiParam,"apiParamapiParam")
       dispatch(GetProductData(apiParam));
-    // }
+    }
     // Safe to add dispatch to the dependencies array
   }, [apiParam]);
   const handleAdd = () => {
-    setName("");
-    setRecordId("");
-    setModalHeader("Add Amenties");
-    setOpen(true);
+    window.location.assign('/cmi/addProduct')
   };
   const handleClose = () => {
     setOpen(false);
@@ -58,12 +60,12 @@ const ProductList = () => {
       };
     }
     await dispatch(AddProductData(data));
-    await dispatch(GetProductData(apiParam));
+    //await dispatch(GetProductData(apiParam));
     setOpen(false);
   };
-const handleView=(id)=>{
-  window.location.assign(`/cmi/productDetails/${id}`)
-}
+  const handleView = (id) => {
+    window.location.assign(`/cmi/productDetails/${id}`)
+  }
   return (
     <>
       <Typography className="pageHeader">Product List</Typography>
@@ -82,7 +84,7 @@ const handleView=(id)=>{
         onEdit={handleEdit}
         handleView={handleView}
       />
-      
+
     </>
   );
 };
